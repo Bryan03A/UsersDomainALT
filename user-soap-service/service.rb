@@ -14,7 +14,7 @@ before do
   allowed_origins = [
     'http://3.227.120.143:8080',  # Interfaz de usuario
     'http://54.90.161.226:80',
-    'http://54.90.161.226/user-soap'        # API Gateway
+    'http://54.90.161.226/user-soap'  # API Gateway
   ]
 
   origin = request.env['HTTP_ORIGIN']
@@ -26,6 +26,27 @@ before do
     response.headers['Access-Control-Allow-Credentials'] = 'true'
     response.headers['Vary'] = 'Origin'
   end
+end
+
+options '*' do
+  allowed_origins = [
+    'http://3.227.120.143:8080',
+    'http://54.90.161.226:80',
+    'http://54.90.161.226/user-soap'
+  ]
+
+  origin = request.env['HTTP_ORIGIN']
+
+  if allowed_origins.include?(origin)
+    response.headers['Access-Control-Allow-Origin'] = origin
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Vary'] = 'Origin'
+  end
+
+  status 204
+  body ''
 end
 
 # Load environment variables
