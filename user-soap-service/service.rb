@@ -13,7 +13,8 @@ end
 before do
   allowed_origins = [
     'http://3.227.120.143:8080',  # Interfaz de usuario
-    'http://54.90.161.226'        # API Gateway
+    'http://54.90.161.226:80',
+    'http://54.90.161.226/user-soap'        # API Gateway
   ]
 
   origin = request.env['HTTP_ORIGIN']
