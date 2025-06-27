@@ -11,30 +11,20 @@ configure do
 end
 
 before do
-  allowed_origin = 'http://3.227.120.143:8080' # interfaz de usuario
+  allowed_origins = [
+    'http://3.227.120.143:8080',  # Interfaz de usuario
+    'http://54.90.161.226'        # API Gateway
+  ]
+
   origin = request.env['HTTP_ORIGIN']
 
-  if origin == allowed_origin
+  if allowed_origins.include?(origin)
     response.headers['Access-Control-Allow-Origin'] = origin
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
     response.headers['Vary'] = 'Origin'
   end
-
-  response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-  response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-end
-
-options '*' do
-  allowed_origin = 'http://3.227.120.143:8080'
-  origin = request.env['HTTP_ORIGIN']
-
-  if origin == allowed_origin
-    response.headers['Access-Control-Allow-Origin'] = origin
-    response.headers['Vary'] = 'Origin'
-  end
-
-  response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-  response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-  200
 end
 
 # Load environment variables
