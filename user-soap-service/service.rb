@@ -11,13 +11,27 @@ configure do
 end
 
 before do
-  response.headers['Access-Control-Allow-Origin'] = '*'
+  allowed_origin = 'http://3.227.120.143:8080' # interfaz de usuario
+  origin = request.env['HTTP_ORIGIN']
+
+  if origin == allowed_origin
+    response.headers['Access-Control-Allow-Origin'] = origin
+    response.headers['Vary'] = 'Origin'
+  end
+
   response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
   response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
 end
 
 options '*' do
-  response.headers['Access-Control-Allow-Origin'] = '*'
+  allowed_origin = 'http://3.227.120.143:8080'
+  origin = request.env['HTTP_ORIGIN']
+
+  if origin == allowed_origin
+    response.headers['Access-Control-Allow-Origin'] = origin
+    response.headers['Vary'] = 'Origin'
+  end
+
   response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
   response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
   200
