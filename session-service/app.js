@@ -18,10 +18,10 @@ if (!MONGO_URI) {
 const app = express();
 
 
-app.use(cors({
-    origin: '*',  // Allow requests only from your frontend
-    credentials: true  // Allows sending cookies and authentication headers
-}));
+// app.use(cors({
+//    origin: '*',  // Allow requests only from your frontend
+//    credentials: true  // Allows sending cookies and authentication headers
+//}));
 
 // Middleware
 app.use(express.json());
