@@ -18,7 +18,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            REPO_CODE="https://github.com/Bryan03A/UsersDomain.git"
+            REPO_CODE="https://github.com/Bryan03A/UsersDomainALT.git"
             REPO_ENVS="https://${{ secrets.ENV_REPO_TOKEN }}@github.com/Bryan03A/DomainUsers-envs.git"
 
             mkdir -p ~/deploy-code
@@ -28,7 +28,7 @@ jobs:
             if [ -d "UsersDomain" ]; then
               cd UsersDomain && git pull origin test && cd ..
             else
-              git clone -b test $REPO_CODE
+              git clone -b test $REPO_CODE UsersDomain
             fi
 
             cd ~/deploy-envs
