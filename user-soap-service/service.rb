@@ -11,42 +11,30 @@ configure do
 end
 
 before do
-  allowed_origins = [
-    'http://3.227.120.143:8080',  # Interfaz de usuario
-    'http://54.90.161.226:80',
-    'http://54.90.161.226/user-soap'  # API Gateway
-  ]
-
+  allowed_origin = 'http://3.227.120.143:8080' # interfaz de usuario
   origin = request.env['HTTP_ORIGIN']
 
-  if allowed_origins.include?(origin)
+  if origin == allowed_origin
     response.headers['Access-Control-Allow-Origin'] = origin
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
     response.headers['Vary'] = 'Origin'
   end
+
+  response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+  response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
 end
 
 options '*' do
-  allowed_origins = [
-    'http://3.227.120.143:8080',
-    'http://54.90.161.226:80',
-    'http://54.90.161.226/user-soap'
-  ]
-
+  allowed_origin = 'http://3.227.120.143:8080'
   origin = request.env['HTTP_ORIGIN']
 
-  if allowed_origins.include?(origin)
+  if origin == allowed_origin
     response.headers['Access-Control-Allow-Origin'] = origin
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
     response.headers['Vary'] = 'Origin'
   end
 
-  status 204
-  body ''
+  response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+  response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+  200
 end
 
 # Load environment variables
